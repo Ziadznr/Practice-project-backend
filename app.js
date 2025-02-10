@@ -29,3 +29,30 @@ const limiter = rateLimit({
     max: 3000
 })
 app.use(limiter)
+
+// Mongodb Database Connection
+async function connectDB() {
+    try {
+        await mongoose.connect('mongodb://localhost:27017/ToDo', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            autoIndex: true
+        });
+        console.log('MongoDB Connected');
+    } catch (error) {
+        console.error('MongoDB Connection Error:', error);
+        process.exit(1); // Exit the process if unable to connect
+    }
+}
+connectDB()
+
+
+//Routing Implement
+app.use('/api/v1', router)
+
+//Undefined route
+app.use('*', (req, res) => {
+    res.status(404).json({ status: 'Fail', data: 'Not Found' })
+})
+
+module.exports = app;
