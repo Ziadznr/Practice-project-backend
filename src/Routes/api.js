@@ -1,7 +1,18 @@
 const express = require('express')
 const ProfileController = require("../controllers/ProfileController")
+const ToDoListController = require("../controllers/ToDoListController")
+const AuthVerify = require('../middlewares/AuthVerify')
 const router = express.Router()
 
 router.post('/CreateProfile', ProfileController.CreateProfile)
 router.post('/UserLogin', ProfileController.UserLogin)
+router.get('/SelectProfile', AuthVerify, ProfileController.SelectProfile)
+router.post('/UpdateProfile', AuthVerify, ProfileController.UpdateProfile)
+router.post('/CreateToDo', AuthVerify, ToDoListController.CreateToDo)
+router.get('/SelectToDo', AuthVerify, ToDoListController.SelectToDo)
+router.post('/UpdateToDo', AuthVerify, ToDoListController.UpdateToDo)
+router.post('/UpdateStatusToDo', AuthVerify, ToDoListController.UpdateStatusToDo)
+router.post('/RemoveToDo', AuthVerify, ToDoListController.RemoveToDo)
+router.get('/SelectToDoByStatus', AuthVerify, ToDoListController.SelectToDoByStatus)
+router.get('/SelectToDoByDate', AuthVerify, ToDoListController.SelectToDoByDate)
 module.exports = router
